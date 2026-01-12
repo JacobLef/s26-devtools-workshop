@@ -14,3 +14,6 @@ npm install
 ```bash
 node <file_name>
 ```
+
+### Postman Link
+[Postman](https://www.postman.com/)
