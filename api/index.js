@@ -24,3 +24,24 @@ app.post('/', (req, res) => {
 });
 
 // ========= Write your own post request here to do whatever you want ========
+const messages = [];
+
+app.post('/messages', (req, res) => {
+  const { user, text } = req.body;
+
+  if (!user || !text) {
+    return res.status(400).json({ error: "User and text are required!" });
+  }
+
+  const newMessage = { user, text, timestamp: new Date() };
+  messages.push(newMessage);
+
+  res.status(201).json({
+    message: "Message sent successfully!",
+    data: newMessage
+  });
+});
+
+app.get('/messages', (req, res) => {
+  res.json(messages);
+});
