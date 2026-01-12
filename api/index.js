@@ -23,4 +23,30 @@ app.post('/', (req, res) => {
   res.send(`User with name ${req.body.name} has been created`);
 });
 
-// ========= Write your own post request here to do whatever you want ========
+// ========= Write your own request here to do whatever you want ========
+app.post('/users/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  if (id < 0 || id >= users.length) {
+    req.status(404).send("User not found");
+    return;
+  }
+
+  if (!req.body || !req.body.name) {
+    res.status(400).send("Missing a name in the request body.");
+    return;
+  }
+
+  users[id] = req.body.name;
+  res.send(`User at index ${id} updated to ${req.body.name}`);
+});
+
+// ======= Delete request ======
+app.delete('/users/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  if (id < 0 || id >= users.length) {
+    res.status(404).send("Users not found!");
+    return;
+  }
+  const deletedUser = users.splice(id, 1);
+  res.send(`User ${deletedUser} has been deleted.`);
+});
